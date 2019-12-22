@@ -1,0 +1,35 @@
+ 
+99% similar to mapreduce steps 
+
+  1.  make the dev dir under /user/cloudera/ 
+       hadoop fs -mkdir /user/cloudera/spark/
+       hadoop fs -mkdir /user/cloudera/spark/sparkWordCount
+
+  2.   chnage dir mode 
+      hadoop fs -chmod 777 /user/cloudera/spark/
+      hadoop fs -chmod 777 /user/cloudera/spark/sparkWordCount
+
+  3. copy the input file under that dir .
+     hadoop fs -put /home/cloudera/Desktop/hello /user/cloudera/spark/sparkWordCount/hello
+
+ 
+  4. check the copied file is available ?
+     hadoop fs -ls  /user/cloudera/spark/sparkWordCount/hello
+
+**  5. dont copy the jar on distributed env. this jar needs to be located on local env. otherwise u ll get "not a valid jar exception"
+    /home/cloudera/Desktop/sparkWordCount.jar
+
+
+   6. run the command (*** specify fully qualified name of driver class & dont copy the jar on edge node.)
+
+spark-submit --class sparkWordCount.WordCounter --master local /home/cloudera/Desktop/sparkWordCount.jar /user/cloudera/spark/sparkWordCount/hello /user/cloudera/spark/sparkWordCount/countedWordsFile
+
+
+   7. check the output 
+   hadoop fs -cat /user/cloudera/spark/sparkWordCount/countedWordsFile/part-00000
+           
+
+
+
+
+
